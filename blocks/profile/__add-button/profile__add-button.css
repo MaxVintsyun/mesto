@@ -3,6 +3,9 @@
     padding: 0;
     background-color: transparent;
     background-repeat: no-repeat;
+    background-image: url(../../../images/add-button.svg);
+    background-size: 22px;
+    background-position: center;
     cursor: pointer;
     overflow: hidden;
     outline: none;
@@ -11,10 +14,16 @@
     align-self: center;
     width: 150px;
     height: 50px;
+    transition: opacity 0.3s linear;
+}
+
+.profile__add-button:hover {
+    opacity: 0.6;
 }
 
 @media screen and (max-width: 900px) {
     .profile__add-button {
+        background-size: 16px;
         margin: 36px 0 0 0;
         width: 100%;
     }
