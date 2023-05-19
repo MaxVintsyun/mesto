@@ -9,7 +9,6 @@
     background-size: 100%;
     border: none;
     cursor: pointer;
-    overflow: hidden;
     outline: none;
     transition: opacity 0.3s linear;
 }
