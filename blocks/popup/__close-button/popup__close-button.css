@@ -12,7 +12,6 @@
     background-size: cover;
     border: none;
     cursor: pointer;
-    overflow: hidden;
     outline: none;
     transition: opacity 0.3s linear;
 }
