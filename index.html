@@ -61,16 +61,16 @@
     </footer>
     <div class="popup">
       <div class="popup__overlay">
-        <form class="popup__container">
-          <h2 class="popup__title">Редактировать профиль</h2>
-          <input class="popup__profile-name" type="text" name="profile-name" value="Жак-Ив Кусто">
-          <input class="popup__profile-about" type="text" name="profile-about" value="Исследователь океана">
+        <h2 class="popup__title">Редактировать профиль</h2>
+        <form class="popup__container" name="popup__form" method="post">
+          <input class="popup__input" id="popup__input_profile-name" type="text" name="profile-name" placeholder="Имя">
+          <input class="popup__input" id="popup__input_profile-about" type="text" name="profile-about" placeholder="О себе">
           <button class="popup__save-button" type="submit">Сохранить</button>
-          <button class="popup__close-button" type="button"></button>
         </form>
+        <button class="popup__close-button" type="button"></button>
       </div>
     </div>
-    <script src="script.js"></script>
+    <script src="./scripts/script.js"></script>
 </body>
 
 </html>
