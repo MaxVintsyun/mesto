@@ -5,4 +5,5 @@
     background-repeat: no-repeat;
     border-radius: 10px 10px 0 0;
     filter: brightness(0.7);
+    cursor: pointer;
 }
