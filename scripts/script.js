@@ -17,64 +17,43 @@ const imagePopup = document.querySelector('#image-popup');
 const imagePopupImg = document.querySelector('.image-popup__image');
 const imagePopupCaption = document.querySelector('.image-popup__caption');
 
-const closeButton = document.querySelectorAll('.popup__close-button');
+const closeButtonList = document.querySelectorAll('.popup__close-button');
 
+const cardsContainer = document.querySelector('.cards');
+const cardTemplate = document.querySelector('#card-template').content.querySelector('.card');
 
+function openImagePopup(cardData) {
+    imagePopupImg.src = cardData.link;
+    imagePopupImg.alt = cardData.name;
+    imagePopupCaption.textContent = cardData.name;
+    openPopup(imagePopup);
+}
 
-const cards = document.querySelector('.cards');
-const cardTemplate = document.querySelector('#card-template').content;
-const initialCards = [
-    {
-      name: 'Архыз',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
-    },
-    {
-      name: 'Челябинская область',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
-    },
-    {
-      name: 'Иваново',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
-    },
-    {
-      name: 'Камчатка',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
-    },
-    {
-      name: 'Холмогорский район',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
-    },
-    {
-      name: 'Байкал',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
-    }
-];
+function likeCard(evt) {
+    evt.target.classList.toggle('card__like-button_active');
+}
 
-function createCard(cardName, cardImageLink) {
+function deleteCard(evt) {
+    evt.target.closest('.card').remove();
+}
+
+function createCard(cardData) {
     const cardElement = cardTemplate.cloneNode(true);
     const cardImage = cardElement.querySelector('.card__image');
-    cardImage.style.backgroundImage = `url(${cardImageLink})`;
-    cardElement.querySelector('.card__name').textContent = cardName;
+    cardImage.style.backgroundImage = `url(${cardData.link})`;
+    cardElement.querySelector('.card__name').textContent = cardData.name;
 
-    cardImage.addEventListener('click', () => {
-        imagePopupImg.src = cardImageLink;
-        imagePopupImg.alt = cardName;
-        imagePopupCaption.textContent = cardName;
-        openPopup(imagePopup);
-    });
+    cardImage.addEventListener('click', () => openImagePopup(cardData));
 
-    cardElement.querySelector('.card__like-button').addEventListener('click', evt => {
-        evt.target.classList.toggle('card__like-button_active');
-    });
+    cardElement.querySelector('.card__like-button').addEventListener('click', evt => likeCard(evt));
 
-    cardElement.querySelector('.card__delete').addEventListener('click', evt => {
-        evt.target.closest('.card').remove();
-    });
+    cardElement.querySelector('.card__delete').addEventListener('click', evt => deleteCard(evt));
+
     return cardElement;
 }
 
-initialCards.forEach(card => {
-    cards.append(createCard(card.name, card.link));
+initialCards.forEach(cardData => {
+    cardsContainer.append(createCard(cardData));
 })
 
 function openPopup(popup) {
@@ -89,29 +68,35 @@ profileEditButton.addEventListener('click', () => {
 
 profileAddCard.addEventListener('click', () => openPopup(popupAddCard));
 
-function closePupup(evt) {
-    evt.target.closest('.popup').classList.remove('popup_opened');
+function closePopup(popup) {
+    popup.classList.remove('popup_opened');
 }
 
-closeButton.forEach(button => {
-    button.addEventListener('click', evt => {
-        closePupup(evt);
-    });
+closeButtonList.forEach(closeButton => {
+    closeButton.addEventListener('click', evt => closePopup(evt.target.closest('.popup')));
 })
 
-popupAddCardContainer.addEventListener('submit', evt => {
+function addCard(evt) {
     evt.preventDefault();
+    
+    const cardData = {
+        name: cardNameInput.value,
+        link: cardLinkInput.value
+    };
+    cardsContainer.prepend(createCard(cardData));
 
-    cards.prepend(createCard(cardNameInput.value, cardLinkInput.value));
+    closePopup(popupAddCard);
+}
 
-    closePupup(evt);
-})
+popupAddCardContainer.addEventListener('submit', evt => addCard(evt));
 
-popupProfileContainer.addEventListener('submit', evt => {
+function changeProfileData(evt) {
     evt.preventDefault();
     
     profileName.textContent = nameInput.value;
     profileAbout.textContent = aboutInput.value;
 
-    closePupup(evt);
-}); 
+    closePopup(popupProfile);
+}
+
+popupProfileContainer.addEventListener('submit', evt => changeProfileData(evt)); 
