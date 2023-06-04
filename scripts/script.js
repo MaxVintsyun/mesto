@@ -118,7 +118,7 @@ function clickOutPopupClosing(popupOverlay, evt) {
 }
 
 popupList.forEach(popup => {
-    const popupOverlay = popup.querySelector('#popup-overlay');
+    const popupOverlay = popup.querySelector('.popup__content');
     escPopupClosing(popup);
     popup.addEventListener('click', evt => clickOutPopupClosing(popupOverlay, evt));
 })
