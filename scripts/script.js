@@ -5,13 +5,13 @@ const profileAddCard = document.querySelector('.profile__add-button');
 
 const popupProfile = document.querySelector('#popup__profile');
 const popupProfileContainer = document.querySelector('#popup__container_profile');
-const nameInput = document.querySelector('#popup__input_profile-name');
-const aboutInput = document.querySelector('#popup__input_profile-about');
+const nameInput = document.querySelector('#profile-name-input');
+const aboutInput = document.querySelector('#profile-about-input');
 
 const popupAddCard = document.querySelector('#popup__add-card');
 const popupAddCardContainer = document.querySelector('#popup__container_add-card');
-const cardNameInput = document.querySelector('#popup__input_place-name');
-const cardLinkInput = document.querySelector('#popup__input_place-link');
+const cardNameInput = document.querySelector('#place-name-input');
+const cardLinkInput = document.querySelector('#place-link-input');
 
 const imagePopup = document.querySelector('#image-popup');
 const imagePopupImg = document.querySelector('.image-popup__image');
@@ -99,4 +99,4 @@ function changeProfileData(evt) {
     closePopup(popupProfile);
 }
 
-popupProfileContainer.addEventListener('submit', evt => changeProfileData(evt)); 
+popupProfileContainer.addEventListener('submit', evt => changeProfileData(evt));
