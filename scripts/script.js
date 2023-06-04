@@ -3,6 +3,8 @@ const profileName = document.querySelector('.profile__name');
 const profileAbout = document.querySelector('.profile__about');
 const profileAddCard = document.querySelector('.profile__add-button');
 
+const popupList = document.querySelectorAll('.popup');
+
 const popupProfile = document.querySelector('#popup__profile');
 const popupProfileContainer = document.querySelector('#popup__container_profile');
 const nameInput = document.querySelector('#profile-name-input');
@@ -100,3 +102,23 @@ function changeProfileData(evt) {
 }
 
 popupProfileContainer.addEventListener('submit', evt => changeProfileData(evt));
+
+function escPopupClosing(popup) {
+    document.addEventListener('keydown', evt => {
+        if(evt.key === 'Escape') {
+            closePopup(popup);
+        }
+    });
+}
+
+function clickOutPopupClosing(popupOverlay, evt) {
+    if(!popupOverlay.contains(evt.target)) {
+        closePopup(evt.target.closest('.popup'));
+    }
+}
+
+popupList.forEach(popup => {
+    const popupOverlay = popup.querySelector('#popup-overlay');
+    escPopupClosing(popup);
+    popup.addEventListener('click', evt => clickOutPopupClosing(popupOverlay, evt));
+})
