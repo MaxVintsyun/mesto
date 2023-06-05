@@ -42,7 +42,7 @@ function deleteCard(evt) {
 function createCard(cardData) {
     const cardElement = cardTemplate.cloneNode(true);
     const cardImage = cardElement.querySelector('.card__image');
-    cardImage.style.backgroundImage = `url(${cardData.link})`;
+    cardImage.src = cardData.link;
     cardElement.querySelector('.card__name').textContent = cardData.name;
 
     cardImage.addEventListener('click', () => openImagePopup(cardData));
@@ -58,8 +58,30 @@ initialCards.forEach(cardData => {
     cardsContainer.append(createCard(cardData));
 })
 
+function closePopup(popup) {
+    popup.classList.remove('popup_opened');
+}
+
+function clickOutPopupClosing(evt) {
+    if(evt.currentTarget === evt.target) { 
+        closePopup(evt.currentTarget); 
+    } 
+}
+
+popupList.forEach(popup => {
+    popup.addEventListener('click', clickOutPopupClosing);
+})
+
+function escPopupClosing(popup, evt) {
+    if(evt.key === 'Escape') {
+        closePopup(popup);
+        evt.target.removeEventListener('keydown', escPopupClosing);
+    }
+}
+
 function openPopup(popup) {
     popup.classList.add('popup_opened');
+    document.addEventListener('keydown', evt => escPopupClosing(popup, evt));
 }
 
 profileEditButton.addEventListener('click', () => {
@@ -69,10 +91,6 @@ profileEditButton.addEventListener('click', () => {
 });
 
 profileAddCard.addEventListener('click', () => openPopup(popupAddCard));
-
-function closePopup(popup) {
-    popup.classList.remove('popup_opened');
-}
 
 closeButtonList.forEach(closeButton => {
     closeButton.addEventListener('click', evt => closePopup(evt.target.closest('.popup')));
@@ -102,23 +120,3 @@ function changeProfileData(evt) {
 }
 
 popupProfileContainer.addEventListener('submit', evt => changeProfileData(evt));
-
-function escPopupClosing(popup) {
-    document.addEventListener('keydown', evt => {
-        if(evt.key === 'Escape') {
-            closePopup(popup);
-        }
-    });
-}
-
-function clickOutPopupClosing(popupOverlay, evt) {
-    if(!popupOverlay.contains(evt.target)) {
-        closePopup(evt.target.closest('.popup'));
-    }
-}
-
-popupList.forEach(popup => {
-    const popupOverlay = popup.querySelector('.popup__content');
-    escPopupClosing(popup);
-    popup.addEventListener('click', evt => clickOutPopupClosing(popupOverlay, evt));
-})
