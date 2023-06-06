@@ -60,6 +60,7 @@ initialCards.forEach(cardData => {
 
 function closePopup(popup) {
     popup.classList.remove('popup_opened');
+    document.removeEventListener('keydown', escPopupClosing);
 }
 
 function clickOutPopupClosing(evt) {
@@ -72,16 +73,15 @@ popupList.forEach(popup => {
     popup.addEventListener('click', clickOutPopupClosing);
 })
 
-function escPopupClosing(popup, evt) {
+function escPopupClosing(evt) {
     if(evt.key === 'Escape') {
-        closePopup(popup);
-        evt.target.removeEventListener('keydown', escPopupClosing);
+        closePopup(document.querySelector('.popup_opened'));
     }
 }
 
 function openPopup(popup) {
     popup.classList.add('popup_opened');
-    document.addEventListener('keydown', evt => escPopupClosing(popup, evt));
+    document.addEventListener('keydown', escPopupClosing);
 }
 
 profileEditButton.addEventListener('click', () => {
