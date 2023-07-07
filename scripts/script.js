@@ -126,18 +126,3 @@ function changeProfileData(evt) {
 }
 
 popupProfileContainer.addEventListener('submit', evt => changeProfileData(evt));
-
-// const formValidators = {}
-
-// const enableValidation = (validationConfig) => {
-//   const formList = Array.from(document.querySelectorAll(validationConfig.formContainer));
-//   formList.forEach((formElement) => {
-//     const validator = new FormValidator(validationConfig, formElement);
-//     const formName = formElement.getAttribute('name');
-
-//     formValidators[formName] = validator;
-//     validator.enableValidation();
-//   });
-// };
-
-// enableValidation(validationConfig);
