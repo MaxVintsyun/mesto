@@ -26,7 +26,7 @@ const closeButtonList = document.querySelectorAll('.popup__close-button');
 
 const cardsContainer = document.querySelector('.cards');
 
-export function openImagePopup(name, link) {
+function handleCardClick(name, link) {
     imagePopupImg.src = link;
     imagePopupImg.alt = name;
     imagePopupCaption.textContent = name;
@@ -34,7 +34,7 @@ export function openImagePopup(name, link) {
 }
 
 initialCards.forEach(cardData => {
-    const card = new Card(cardData, '#card-template');
+    const card = new Card(cardData, '#card-template', handleCardClick);
     const cardElement = card.createCard();
     cardsContainer.append(cardElement);
 })
@@ -84,7 +84,7 @@ function addCard(evt) {
         name: cardNameInput.value,
         link: cardLinkInput.value
     };
-    const card = new Card(cardData, '#card-template');
+    const card = new Card(cardData, '#card-template', handleCardClick);
     const cardElement = card.createCard();
     cardsContainer.prepend(cardElement);
 
