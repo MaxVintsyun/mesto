@@ -26,7 +26,7 @@ const closeButtonList = document.querySelectorAll('.popup__close-button');
 
 const cardsContainer = document.querySelector('.cards');
 
-const formValidators = {}
+const formValidators = {};
 
 const enableValidation = (validationConfig) => {
   const formList = Array.from(document.querySelectorAll(validationConfig.formContainer));
