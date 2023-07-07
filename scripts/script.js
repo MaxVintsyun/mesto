@@ -1,3 +1,5 @@
+import Card from "./Card.js";
+
 const profileEditButton = document.querySelector('.profile__edit-button');
 const profileName = document.querySelector('.profile__name');
 const profileAbout = document.querySelector('.profile__about');
@@ -22,40 +24,18 @@ const imagePopupCaption = document.querySelector('.image-popup__caption');
 const closeButtonList = document.querySelectorAll('.popup__close-button');
 
 const cardsContainer = document.querySelector('.cards');
-const cardTemplate = document.querySelector('#card-template').content.querySelector('.card');
 
-function openImagePopup(cardData) {
-    imagePopupImg.src = cardData.link;
-    imagePopupImg.alt = cardData.name;
-    imagePopupCaption.textContent = cardData.name;
+export function openImagePopup(name, link) {
+    imagePopupImg.src = link;
+    imagePopupImg.alt = name;
+    imagePopupCaption.textContent = name;
     openPopup(imagePopup);
 }
 
-function likeCard(evt) {
-    evt.target.classList.toggle('card__like-button_active');
-}
-
-function deleteCard(evt) {
-    evt.target.closest('.card').remove();
-}
-
-function createCard(cardData) {
-    const cardElement = cardTemplate.cloneNode(true);
-    const cardImage = cardElement.querySelector('.card__image');
-    cardImage.src = cardData.link;
-    cardElement.querySelector('.card__name').textContent = cardData.name;
-
-    cardImage.addEventListener('click', () => openImagePopup(cardData));
-
-    cardElement.querySelector('.card__like-button').addEventListener('click', evt => likeCard(evt));
-
-    cardElement.querySelector('.card__delete').addEventListener('click', evt => deleteCard(evt));
-
-    return cardElement;
-}
-
 initialCards.forEach(cardData => {
-    cardsContainer.append(createCard(cardData));
+    const card = new Card(cardData, '#card-template');
+    const cardElement = card.createCard();
+    cardsContainer.append(cardElement);
 })
 
 function closePopup(popup) {
@@ -103,7 +83,9 @@ function addCard(evt) {
         name: cardNameInput.value,
         link: cardLinkInput.value
     };
-    cardsContainer.prepend(createCard(cardData));
+    const card = new Card(cardData, '#card-template');
+    const cardElement = card.createCard();
+    cardsContainer.prepend(cardElement);
 
     closePopup(popupAddCard);
 }
