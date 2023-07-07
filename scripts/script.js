@@ -33,10 +33,14 @@ function handleCardClick(name, link) {
     openPopup(imagePopup);
 }
 
-initialCards.forEach(cardData => {
+function createCard(cardData) {
     const card = new Card(cardData, '#card-template', handleCardClick);
     const cardElement = card.createCard();
-    cardsContainer.append(cardElement);
+    return cardElement;
+}
+
+initialCards.forEach(cardData => {
+    cardsContainer.append(createCard(cardData));
 })
 
 function closePopup(popup) {
@@ -84,9 +88,9 @@ function addCard(evt) {
         name: cardNameInput.value,
         link: cardLinkInput.value
     };
-    const card = new Card(cardData, '#card-template', handleCardClick);
-    const cardElement = card.createCard();
-    cardsContainer.prepend(cardElement);
+    cardsContainer.prepend(createCard(cardData));
+
+    evt.target.reset();
 
     closePopup(popupAddCard);
 }
