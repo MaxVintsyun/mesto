@@ -26,6 +26,21 @@ const closeButtonList = document.querySelectorAll('.popup__close-button');
 
 const cardsContainer = document.querySelector('.cards');
 
+const formValidators = {}
+
+const enableValidation = (validationConfig) => {
+  const formList = Array.from(document.querySelectorAll(validationConfig.formContainer));
+  formList.forEach((formElement) => {
+    const validator = new FormValidator(validationConfig, formElement);
+    const formName = formElement.getAttribute('name');
+
+    formValidators[formName] = validator;
+    validator.enableValidation();
+  });
+};
+
+enableValidation(validationConfig);
+
 function handleCardClick(name, link) {
     imagePopupImg.src = link;
     imagePopupImg.alt = name;
@@ -70,12 +85,16 @@ function openPopup(popup) {
 }
 
 profileEditButton.addEventListener('click', () => {
+    formValidators['popup-form-profile'].resetValidation();
     nameInput.value = profileName.textContent;
     aboutInput.value = profileAbout.textContent;
     openPopup(popupProfile);
 });
 
-profileAddCard.addEventListener('click', () => openPopup(popupAddCard));
+profileAddCard.addEventListener('click', () => {
+    formValidators['popup-form-card'].resetValidation();
+    openPopup(popupAddCard);
+});
 
 closeButtonList.forEach(closeButton => {
     closeButton.addEventListener('click', evt => closePopup(evt.target.closest('.popup')));
@@ -108,7 +127,17 @@ function changeProfileData(evt) {
 
 popupProfileContainer.addEventListener('submit', evt => changeProfileData(evt));
 
-Array.from(document.querySelectorAll(validationConfig.formContainer)).forEach(formElement => {
-    const formValidation = new FormValidator(validationConfig, formElement);
-    formValidation.enableValidation();
-})
+// const formValidators = {}
+
+// const enableValidation = (validationConfig) => {
+//   const formList = Array.from(document.querySelectorAll(validationConfig.formContainer));
+//   formList.forEach((formElement) => {
+//     const validator = new FormValidator(validationConfig, formElement);
+//     const formName = formElement.getAttribute('name');
+
+//     formValidators[formName] = validator;
+//     validator.enableValidation();
+//   });
+// };
+
+// enableValidation(validationConfig);
