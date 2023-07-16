@@ -1,3 +1,4 @@
+import Section from "./Section.js";
 import Card from "./Card.js";
 import FormValidator from "./FormValidator.js";
 
@@ -23,8 +24,6 @@ const imagePopupImg = document.querySelector('.image-popup__image');
 const imagePopupCaption = document.querySelector('.image-popup__caption');
 
 const closeButtonList = document.querySelectorAll('.popup__close-button');
-
-const cardsContainer = document.querySelector('.cards');
 
 const formValidators = {};
 
@@ -54,9 +53,15 @@ function createCard(cardData) {
     return cardElement;
 }
 
-initialCards.forEach(cardData => {
-    cardsContainer.append(createCard(cardData));
-})
+const renderCards = new Section({
+    items: initialCards,
+    renderer: (item) => {
+        const cardElement = createCard(item);
+        renderCards.appendItem(cardElement);
+    }
+}, '.cards');
+
+renderCards.renderItems();
 
 function closePopup(popup) {
     popup.classList.remove('popup_opened');
@@ -103,11 +108,13 @@ closeButtonList.forEach(closeButton => {
 function addCard(evt) {
     evt.preventDefault();
     
+
     const cardData = {
         name: cardNameInput.value,
         link: cardLinkInput.value
     };
-    cardsContainer.prepend(createCard(cardData));
+
+    renderCards.prependItem(createCard(cardData));
 
     evt.target.reset();
 
