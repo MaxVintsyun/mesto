@@ -2,6 +2,7 @@ import Section from "./Section.js";
 import Card from "./Card.js";
 import FormValidator from "./FormValidator.js";
 import Popup from "./Popup.js";
+import PopupWithImage from "./PopupWithImage.js";
 
 const profileEditButton = document.querySelector('.profile__edit-button');
 const profileName = document.querySelector('.profile__name');
@@ -19,10 +20,6 @@ const popupAddCard = document.querySelector('#popup__add-card');
 const popupAddCardContainer = document.querySelector('#popup__container_add-card');
 const cardNameInput = document.querySelector('#place-name-input');
 const cardLinkInput = document.querySelector('#place-link-input');
-
-const imagePopup = document.querySelector('#image-popup');
-const imagePopupImg = document.querySelector('.image-popup__image');
-const imagePopupCaption = document.querySelector('.image-popup__caption');
 
 const closeButtonList = document.querySelectorAll('.popup__close-button');
 
@@ -42,10 +39,8 @@ const enableValidation = (validationConfig) => {
 enableValidation(validationConfig);
 
 function handleCardClick(name, link) {
-    imagePopupImg.src = link;
-    imagePopupImg.alt = name;
-    imagePopupCaption.textContent = name;
-    openPopup(imagePopup);
+    const imagePopup = new PopupWithImage('#image-popup');
+    imagePopup.open(name, link);
 }
 
 function createCard(cardData) {
