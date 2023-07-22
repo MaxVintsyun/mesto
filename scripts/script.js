@@ -1,8 +1,8 @@
 import Section from "./Section.js";
 import Card from "./Card.js";
 import FormValidator from "./FormValidator.js";
-import Popup from "./Popup.js";
 import PopupWithImage from "./PopupWithImage.js";
+import PopupWithForm from "./PopupWithForm.js";
 
 const profileEditButton = document.querySelector('.profile__edit-button');
 const profileName = document.querySelector('.profile__name');
@@ -23,6 +23,38 @@ const cardLinkInput = document.querySelector('#place-link-input');
 
 const closeButtonList = document.querySelectorAll('.popup__close-button');
 
+const profilePopup = new PopupWithForm(
+    '#popup__profile', 
+    (evt, data) => {
+        evt.preventDefault();
+    
+        profileName.textContent = data['profile-name'];
+        profileAbout.textContent = data['profile-about'];
+    
+        profilePopup.close();
+    }
+);
+profilePopup.setEventListeners();
+
+const addCardPopup = new PopupWithForm(
+    '#popup__add-card', 
+    (evt, data) => {
+        evt.preventDefault();
+
+        const cardData = {
+            name: data['place-name'],
+            link: data['place-link']
+        };
+    
+        renderCards.prependItem(createCard(cardData));
+    
+        // evt.target.reset();
+    
+        addCardPopup.close();
+    }
+);
+addCardPopup.setEventListeners();
+
 const formValidators = {};
 
 const enableValidation = (validationConfig) => {
@@ -41,6 +73,7 @@ enableValidation(validationConfig);
 function handleCardClick(name, link) {
     const imagePopup = new PopupWithImage('#image-popup');
     imagePopup.open(name, link);
+    imagePopup.setEventListeners();
 }
 
 function createCard(cardData) {
@@ -64,15 +97,15 @@ function closePopup(popup) {
     document.removeEventListener('keydown', escPopupClosing);
 }
 
-function clickOutPopupClosing(evt) {
-    if(evt.currentTarget === evt.target) { 
-        closePopup(evt.currentTarget); 
-    } 
-}
+// function clickOutPopupClosing(evt) {
+//     if(evt.currentTarget === evt.target) { 
+//         closePopup(evt.currentTarget); 
+//     } 
+// }
 
-popupList.forEach(popup => {
-    popup.addEventListener('click', clickOutPopupClosing);
-})
+// popupList.forEach(popup => {
+//     popup.addEventListener('click', clickOutPopupClosing);
+// })
 
 function escPopupClosing(evt) {
     if(evt.key === 'Escape') {
@@ -80,52 +113,55 @@ function escPopupClosing(evt) {
     }
 }
 
-function openPopup(popup) {
-    popup.classList.add('popup_opened');
-    document.addEventListener('keydown', escPopupClosing);
-}
+// function openPopup(popup) {
+//     popup.classList.add('popup_opened');
+//     document.addEventListener('keydown', escPopupClosing);
+// }
 
 profileEditButton.addEventListener('click', () => {
     formValidators['popup-form-profile'].resetValidation();
     nameInput.value = profileName.textContent;
     aboutInput.value = profileAbout.textContent;
-    openPopup(popupProfile);
+    
+    profilePopup.open();
 });
 
 profileAddCard.addEventListener('click', () => {
     formValidators['popup-form-card'].resetValidation();
-    openPopup(popupAddCard);
+    addCardPopup.open();
 });
 
-closeButtonList.forEach(closeButton => {
-    closeButton.addEventListener('click', evt => closePopup(evt.target.closest('.popup')));
-})
+// closeButtonList.forEach(closeButton => {
+//     closeButton.addEventListener('click', evt => closePopup(evt.target.closest('.popup')));
+// })
 
-function addCard(evt) {
-    evt.preventDefault();
+// function addCard(evt, data) {
+//     evt.preventDefault();
     
 
-    const cardData = {
-        name: cardNameInput.value,
-        link: cardLinkInput.value
-    };
+//     const cardData = {
+//         name: data['place-name'],
+//         link: data['place-link']
+//     };
 
-    renderCards.prependItem(createCard(cardData));
+//     renderCards.prependItem(createCard(cardData));
 
-    evt.target.reset();
+//     // evt.target.reset();
 
-    closePopup(popupAddCard);
-}
+//     addCardPopup.close();
+// }
 
-popupAddCardContainer.addEventListener('submit', evt => addCard(evt));
+// popupAddCardContainer.addEventListener('submit', evt => addCard(evt));
 
-function changeProfileData(evt) {
-    evt.preventDefault();
+// function changeProfileData(evt, data) {
+//     evt.preventDefault();
     
-    profileName.textContent = nameInput.value;
-    profileAbout.textContent = aboutInput.value;
+//     console.log(data);
 
-    closePopup(popupProfile);
-}
+//     profileName.textContent = data['profile-name'];
+//     profileAbout.textContent = data['profile-about'];
 
-popupProfileContainer.addEventListener('submit', evt => changeProfileData(evt));
+//     profilePopup.close();
+// }
+
+// popupProfileContainer.addEventListener('submit', evt => changeProfileData(evt));
