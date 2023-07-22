@@ -3,6 +3,7 @@ import Card from "./Card.js";
 import FormValidator from "./FormValidator.js";
 import PopupWithImage from "./PopupWithImage.js";
 import PopupWithForm from "./PopupWithForm.js";
+import UserInfo from "./UserInfo.js";
 
 const profileEditButton = document.querySelector('.profile__edit-button');
 const profileName = document.querySelector('.profile__name');
@@ -23,13 +24,20 @@ const cardLinkInput = document.querySelector('#place-link-input');
 
 const closeButtonList = document.querySelectorAll('.popup__close-button');
 
+const userInfo = new UserInfo({
+    nameSelector: '.profile__name', 
+    aboutSelector: '.profile__about'
+})
+
 const profilePopup = new PopupWithForm(
     '#popup__profile', 
     (evt, data) => {
         evt.preventDefault();
+
+        userInfo.setUserInfo(data['profile-name'], data['profile-about']);
     
-        profileName.textContent = data['profile-name'];
-        profileAbout.textContent = data['profile-about'];
+        // profileName.textContent = data['profile-name'];
+        // profileAbout.textContent = data['profile-about'];
     
         profilePopup.close();
     }
@@ -120,8 +128,9 @@ function escPopupClosing(evt) {
 
 profileEditButton.addEventListener('click', () => {
     formValidators['popup-form-profile'].resetValidation();
-    nameInput.value = profileName.textContent;
-    aboutInput.value = profileAbout.textContent;
+    const userData = userInfo.getUserInfo();
+    nameInput.value = userData.userName;
+    aboutInput.value = userData.userAbout;
     
     profilePopup.open();
 });
