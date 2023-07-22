@@ -1,15 +1,19 @@
-import Section from "./Section.js";
-import Card from "./Card.js";
-import FormValidator from "./FormValidator.js";
-import PopupWithImage from "./PopupWithImage.js";
-import PopupWithForm from "./PopupWithForm.js";
-import UserInfo from "./UserInfo.js";
+import './index.css';
 
-const profileEditButton = document.querySelector('.profile__edit-button');
-const profileAddCard = document.querySelector('.profile__add-button');
-
-const nameInput = document.querySelector('#profile-name-input');
-const aboutInput = document.querySelector('#profile-about-input');
+import Section from "../scripts/Section.js";
+import Card from "../scripts/Card.js";
+import FormValidator from "../scripts/FormValidator.js";
+import PopupWithImage from "../scripts/PopupWithImage.js";
+import PopupWithForm from "../scripts/PopupWithForm.js";
+import UserInfo from "../scripts/UserInfo.js";
+import {
+    profileEditButton, 
+    profileAddCard, 
+    nameInput, 
+    aboutInput, 
+    validationConfig, 
+    initialCards
+} from "../scripts/constants.js"
 
 const userInfo = new UserInfo({
     nameSelector: '.profile__name', 

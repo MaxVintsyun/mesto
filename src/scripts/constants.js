@@ -1,3 +1,9 @@
+const profileEditButton = document.querySelector('.profile__edit-button');
+const profileAddCard = document.querySelector('.profile__add-button');
+
+const nameInput = document.querySelector('#profile-name-input');
+const aboutInput = document.querySelector('#profile-about-input');
+
 const validationConfig = {
   formContainer: '.popup__container',
   inputSelector: '.popup__input',
@@ -33,3 +39,5 @@ const initialCards = [
       link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
     }
 ];
+
+export {profileEditButton, profileAddCard, nameInput, aboutInput, validationConfig, initialCards};
