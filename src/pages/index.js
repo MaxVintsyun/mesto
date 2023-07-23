@@ -49,6 +49,9 @@ const addCardPopup = new PopupWithForm(
 );
 addCardPopup.setEventListeners();
 
+const imagePopup = new PopupWithImage('#image-popup');
+imagePopup.setEventListeners();
+
 const formValidators = {};
 
 const enableValidation = (validationConfig) => {
@@ -65,9 +68,7 @@ const enableValidation = (validationConfig) => {
 enableValidation(validationConfig);
 
 function handleCardClick(name, link) {
-    const imagePopup = new PopupWithImage('#image-popup');
     imagePopup.open(name, link);
-    imagePopup.setEventListeners();
 }
 
 function createCard(cardData) {
