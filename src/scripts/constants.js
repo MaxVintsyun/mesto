@@ -1,3 +1,4 @@
+const avatarEditButton = document.querySelector('.profile__avatar-edit');
 const profileEditButton = document.querySelector('.profile__edit-button');
 const profileAddCard = document.querySelector('.profile__add-button');
 
@@ -13,31 +14,9 @@ const validationConfig = {
   errorClass: 'popup__input-error_active'
 };
 
-const initialCards = [
-    {
-      name: 'Архыз',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
-    },
-    {
-      name: 'Челябинская область',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
-    },
-    {
-      name: 'Иваново',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
-    },
-    {
-      name: 'Камчатка',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
-    },
-    {
-      name: 'Холмогорский район',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
-    },
-    {
-      name: 'Байкал',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
-    }
-];
+const options = {
+  baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-71',
+  authorizationTokken: 'e9c1e256-2a18-4f2a-a202-e6e4e0b68227'
+}
 
-export {profileEditButton, profileAddCard, nameInput, aboutInput, validationConfig, initialCards};
+export {avatarEditButton, profileEditButton, profileAddCard, nameInput, aboutInput, validationConfig, options};
