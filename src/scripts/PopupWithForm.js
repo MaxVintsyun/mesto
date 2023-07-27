@@ -14,10 +14,6 @@ export default class PopupWithForm extends Popup {
         isLoading ? this._submitButton.textContent = 'Сохранение...' : this._submitButton.textContent = this._submitButtonText;
     }
 
-    handleSubmitConfirm(submitConfirm) {
-        this._submitCallback = submitConfirm;
-    }
-
     _getInputValues() {
         const inputValues = {};
         this._inputList.forEach(inputItem => {

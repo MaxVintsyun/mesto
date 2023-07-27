@@ -18,7 +18,6 @@
           <img class="profile__avatar-image" src="<%=require('./images/profile-avatar.png')%>" alt="Аватарка">
           <button class="profile__avatar-edit" type="button"></button>
         </div>
-
         <div class="profile__info">
           <h1 class="profile__name"></h1>
           <button class="profile__edit-button" type="button"></button>
@@ -38,7 +37,7 @@
         <form class="popup__container" id="popup__container_avatar" name="popup-form-avatar" method="post" novalidate>
           <label class="popup__field">
             <input class="popup__input" id="avatar-link-input" type="url" name="avatar" placeholder="Ссылка на картинку" required>
-            <span class="place-link-input-error popup__input-error"></span>          
+            <span class="avatar-link-input-error popup__input-error"></span>          
           </label>
           <button class="popup__save-button" type="submit">Сохранить</button>
         </form>

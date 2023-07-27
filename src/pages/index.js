@@ -5,6 +5,7 @@ import Card from "../scripts/Card.js";
 import FormValidator from "../scripts/FormValidator.js";
 import PopupWithImage from "../scripts/PopupWithImage.js";
 import PopupWithForm from "../scripts/PopupWithForm.js";
+import PopupWithNotice from '../scripts/PopupWithNotice.js';
 import UserInfo from "../scripts/UserInfo.js";
 import Api from '../scripts/Api.js';
 import {
@@ -20,7 +21,6 @@ import {
 const api = new Api(options)
 
 const cards = new Section({
-    items: [],
     renderer: (item, userId) => {
         const cardElement = createCard(item, userId);
         cards.appendItem(cardElement);
@@ -65,11 +65,12 @@ const profilePopup = new PopupWithForm(
 
         profilePopup.renderLoading(true);
         api.updateUserInfo(data)
-        .then(res => userInfo.setUserInfo(res))
+        .then((res) => {
+            userInfo.setUserInfo(res);
+            profilePopup.close();
+        })
         .catch(err => console.log(err))
         .finally(() => profilePopup.renderLoading(false));
-    
-        profilePopup.close();
     }
 );
 profilePopup.setEventListeners();
@@ -81,11 +82,12 @@ const addCardPopup = new PopupWithForm(
 
         addCardPopup.renderLoading(true);
         api.postCard(data).
-        then(res => cards.prependItem(createCard(res)))
+        then((res) => {
+            cards.prependItem(createCard(res, res.owner._id));
+            addCardPopup.close();
+        })
         .catch(err => console.log(err))
         .finally(() => addCardPopup.renderLoading(false));
-    
-        addCardPopup.close();
     }
 );
 addCardPopup.setEventListeners();
@@ -93,14 +95,17 @@ addCardPopup.setEventListeners();
 const imagePopup = new PopupWithImage('#image-popup');
 imagePopup.setEventListeners();
 
-const popupDeleteCard = new PopupWithForm(
+const popupDeleteCard = new PopupWithNotice(
     '#delete-popup', 
-    (evt, data) => {
+    (evt, element, elementId) => {
         evt.preventDefault();
-
         popupDeleteCard.renderLoading(true);
-        api.deleteCard(data)
-        .then(() => popupDeleteCard.close())
+        api.deleteCard(elementId)
+        .then(() => {
+            element.remove();
+            elementId = null;
+            popupDeleteCard.close()
+        })
         .catch(err => console.log(err))
         .finally(() => popupDeleteCard.renderLoading(false));
     }
@@ -129,17 +134,8 @@ function createCard(cardData, userId) {
         handleCardClick: () => {
             imagePopup.open(cardData.name, cardData.link);
         }, 
-        handleDeleteClick: () => {
-            popupDeleteCard.open();
-            popupDeleteCard.handleSubmitConfirm(() => {
-                api.deleteCard(cardData._id)
-                .then(() => {
-                    card.deleteCard();
-                    popupDeleteCard.close();
-                })
-                .catch(err => console.log(err));   
-            })
-            
+        handleDeleteClick: (card, cardId) => {
+            popupDeleteCard.open(card, cardId);            
         },
         handleLikeCard: () => {
             if(card.isLiked()) {

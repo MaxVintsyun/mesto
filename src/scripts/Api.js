@@ -104,6 +104,6 @@ export default class Api {
                 avatar: data.avatar
             })
         })
-        .then(res => {return res.json()});
+        .then(res => this._checkRequest(res));
     }
 }
