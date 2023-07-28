@@ -4,7 +4,7 @@ export default class PopupWithNotice extends Popup {
     constructor(popupSelector, submitCallback) {
         super(popupSelector);
         this._submitCallback = submitCallback;
-        this._popupContainer = document.querySelector(popupSelector).querySelector('.popup__container');
+        this._popupContainer = this._popup.querySelector('.popup__container');
         this._submitButton = this._popupContainer.querySelector('.popup__save-button');
         this._submitButtonText = this._submitButton.textContent;
     }

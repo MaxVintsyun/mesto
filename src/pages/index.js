@@ -102,8 +102,7 @@ const popupDeleteCard = new PopupWithNotice(
         popupDeleteCard.renderLoading(true);
         api.deleteCard(elementId)
         .then(() => {
-            element.remove();
-            elementId = null;
+            element.deleteCard();
             popupDeleteCard.close()
         })
         .catch(err => console.log(err))
